@@ -1,0 +1,107 @@
+# for reproducibility
+seed: 1
+# path to save logs and models
+default_root_dir: 'experiments/data_augmentation_imdb_sparsemap_30p/'
+
+
+# training args
+train:
+    # wandb for logging (optional, comment to disable)
+    wandb_project: 'cfrat'
+    wandb_entity: 'mtreviso'
+
+    # io
+    save_rationales: False      # will be saved in a .txt in the default_root_dir as `{test|val}_rationales.txt`
+    save_counterfactuals: False # will be saved in a .txt in the default_root_dir as `{test|val}_counterfactuals.txt`
+    save_tokenizer: False       # the tokenizer will be pickled and store in the checkpoint dir as `tokenizer.pickle`
+    save_label_encoder: False   # the label encoder will be pickled and store in the checkpoint dir as `label_encoder.pickle`
+    gpu_log: False              # whether to use the gpu callback to see gpu information in the logger
+    # load_tokenizer: False     # load a trained tokenizer stored in the checkpoint dir as `tokenizer.pickle`
+    # load_label_encoder: False # load a trained label encoder stored in the checkpoint dir as `label_encoder.pickle`
+
+    # data
+    synthetic_edits_path: 'data/edits/imdb_train_beam_15_t5_small_30p.tsv'
+    dm: 'imdb_synthetic'        # data module name (see docs for more options)
+    batch_size: 8               # minibatch size
+    num_workers: 1              # number of workers used for data loading (0 means that only a single core will be used)
+    vocab_min_occurrences: 1    # frequency for a token to be added to the vocabulary
+    max_seq_len: 512            # pretrained transformer limitation
+    # max_dataset_size: 64      # limit dataset size (useful for quick testing)
+    # is_original: null         # filter out samples by originality: True, False, or None (no filter, default)
+    filter_invalid_edits: False # whether to filter out invalid edits (according to the original rationalizer)
+    pct_synthetic_dataset_size: 1.0  # percentage of the synthetic dataset to be used (1.0 means all samples)
+
+    # early stopping
+    monitor: 'val_ff_accuracy'  # quantity to be monitored
+    monitor_mode: 'max'         # whether to see if monitored metric has stopped decreasing (min) or increasing (max)
+    monitor_patience: 5         # number of epochs to wait for early stopping
+
+    # define the rationalizer model
+    model: 'transformer_spectra'
+    cf_lbda: 0.01
+
+    # load a checkpoint
+    # ckpt: null  # path to the checkpoint to be loaded
+
+    # factual flow
+    tokenizer: 't5-small'               # Pre-trained tokenizer from the Hugging Face hub. If None, a nltk's WordPunct tokenizer is used
+    gen_arch: 't5-small'                # Pre-trained generator from the Hugging Face hub
+    gen_emb_requires_grad: False        # whether to fine-tune the generator's embedding layer
+    gen_encoder_requires_grad: False    # whether to fine-tune the generator's encoder
+    gen_use_decoder: False              # whether to use the generator's decoder
+    pred_arch: 't5-small'               # Pre-trained predictor from the Hugging Face hub
+    pred_emb_requires_grad: False       # whether to fine-tune the predictor's embedding layer
+    pred_bidirectional: False           # whether to use a bidirectional predictor
+    pred_encoder_requires_grad: True    # whether to fine-tune the predictor's encoder
+    pred_output_requires_grad: True     # whether to fine-tune the predictor's output layer
+    shared_gen_pred: False              # whether to share the generator and predictor's architecture
+    explainer: 'sparsemap'              # explainer to be used. See rationalizers/explainers/__init__.py for more options
+    explainer_pre_mlp: True             # whether to use a mlp before the explainer
+    explainer_requires_grad: True       # whether to fine-tune the explainer (including the mlp)
+    sparsemap_budget: 30                # sequence budget for the SparseMAP explainer
+    sparsemap_transition: 0.01          # transition weight for the SparseMAP explainer
+    sparsemap_temperature: 0.01         # temperature for the SparseMAP explainer
+    dropout: 0.1                        # dropout for the predictor's output layers
+    selection_vector: 'zero'            # which vector to use to represent differentiable masking: `mask` for [MASK], `pad` for [PAD], and `zero` for 0 vectors
+    selection_faithfulness: True        # whether to perform masking on the original input x (`True`) or on the hidden states h (`False`)
+    selection_mask: False               # whether to also mask elements during self-attention, rather than only masking input vectors
+
+    # model: optimizer
+    optimizer: 'adamw'
+    lr: 0.0001
+    weight_decay: 0.000001
+    betas: [0.9, 0.999]
+    amsgrad: False
+    momentum: 0.0
+    dampening: 0.0
+    nesterov: False
+    alpha: 0.99   # for rmsprop
+    centered: False  # for rmsprop
+    lambd: 0.0001  # for asgd
+    t0: 1000000.0  # for asgd
+
+    # model: lr scheduler
+    #scheduler: 'multistep'
+    #milestones: [25, 50, 75]
+    #lr_decay: 0.97  # a.k.a gamma
+
+    # trainer (will be passed to pytorch-lightning's Trainer object)
+    # see the complete list here: https://pytorch-lightning.readthedocs.io/en/stable/trainer.html#trainer-flags
+    accelerator: gpu
+    devices: 1
+    gradient_clip_val: 5.0
+    min_epochs: 3
+    max_epochs: 15
+    #limit_train_batches: 10
+    #limit_val_batches: 1
+    #limit_test_batches: 1
+    #log_every_n_steps: 25
+
+
+# the options defined here will overwrite the ones defined in the checkpoint
+predict:
+    # ckpt: null                # can be defined via cli --ckpt or will get last checkpoint version if it exists
+    load_tokenizer: False       # load a trained tokenizer stored in the checkpoint dir as `tokenizer.pickle`
+    load_label_encoder: False   # load a trained label encoder stored in the checkpoint dir as `label_encoder.pickle`
+    accelerator: gpu
+    devices: 1

@@ -1,0 +1,14 @@
+Cython==0.29.30
+datasets==2.5.1
+entmax==1.0
+nltk==3.7
+numpy==1.22.4
+pandas==1.4.2
+pytorch-lightning==1.7.6
+pytorch-nlp @ git+https://github.com/PetrochukM/PyTorch-NLP.git@d7814a297811c9b0dfb285fe0475098b86f3d348
+sentencepiece==0.1.91
+shortuuid==1.0.9
+torch==1.11.0
+tqdm==4.64.0
+transformers==4.21.2
+wandb==0.12.16

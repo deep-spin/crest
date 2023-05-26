@@ -1,0 +1,10 @@
+evaluate==0.3.0
+jupyter==1.0.0
+jupyterlab==3.4.3
+matplotlib==3.6.0
+sacrebleu==2.3.1
+sacremoses==0.0.53
+scikit-learn==1.1.2
+scipy==1.8.1
+seaborn==0.12.0
+textdistance==4.5.0
