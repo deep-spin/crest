@@ -94,3 +94,6 @@ python3 scripts/forward_simulation.py \
 For SNLI just change the `--student-type` to `bow_nli` and the `--train-data` and `--test-data` to the SNLI files.
 
 
+## Evaluating models on in-domain and out-of-domain data
+
+Follow the script `scripts/evaluate_model.py` to evaluate the models on in-domain and out-of-domain data.

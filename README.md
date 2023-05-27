@@ -164,7 +164,7 @@ For more information about how to generate counterfactuals, check the instructio
 
 Before proceeding, install the evaluation requirements with `pip install -r requirements_eval.txt`.
 
-To analyze the counterfactuals produced by the editor, follow the instructions in the `counterfactual_analysis.ipynb` notebook.
+To analyze the counterfactuals produced by the editor, follow the instructions in the [notebooks/counterfactual_analysis.ipynb](notebooks/counterfactual_analysis.ipynb) notebook.
 The evaluation includes the following metrics:
 - _validity_ computed with off-the-shelf classifiers
 - _fluency_ computed with GPT-2 large
@@ -228,7 +228,7 @@ The analysis includes the following metrics:
         --dm-dataloader "test"
     ```
     2. The rationales will be saved in a file named `data/rationales/{dm_name}_{dm_dataloader}_{ckpt_name}.tsv`.
-    3. Follow the instructions in the `notebooks/plausibility_imdb.ipynb` notebook.
+    3. Follow the instructions in the [notebooks/plausibility_imdb.ipynb](notebooks/plausibility_imdb.ipynb) notebook.
 
 
 - **Forward Simulation**:
@@ -243,7 +243,7 @@ The analysis includes the following metrics:
         --seed 0
     ```
    2. Save the path of the checkpoint of the student model.
-   3. Follow the instructions in the `notebooks/forward_simulation.ipynb` notebook.
+   3. Follow the instructions in the [notebooks/forward_simulation.ipynb](notebooks/forward_simulation.ipynb) notebook.
 
 
 - **Counterfactual Simulation**:
@@ -259,7 +259,7 @@ The analysis includes the following metrics:
       --num-beams 15
     ```
     2. The extracted edits will be saved in a file named `data/edits/{dm_name}_{dm_dataloader}_beam_{num_beams}_{ckpt_name}_factual.tsv`.
-    3. Follow the instructions in the `counterfactual_simulation.ipynb` notebook.
+    3. Follow the instructions in the [notebooks/counterfactual_simulation.ipynb](notebooks/counterfactual_simulation.ipynb) notebook.
 
 
 
