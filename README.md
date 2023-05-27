@@ -283,4 +283,8 @@ If you found our work/code useful, consider citing our paper:
 todo...
 ```
 
+## Acknowledgments
+
+This code is largely based on the [SPECTRA](https://github.com/deep-spin/spectra-rationalization/) repo by Nuno Guerreiro.
+
 
