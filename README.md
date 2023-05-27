@@ -164,7 +164,8 @@ For more information about how to generate counterfactuals, check the instructio
 
 Before proceeding, install the evaluation requirements with `pip install -r requirements_eval.txt`.
 
-To analyze the counterfactuals produced by the editor, follow the instructions in the [notebooks/counterfactual_analysis.ipynb](notebooks/counterfactual_analysis.ipynb) notebook.
+To analyze the counterfactuals produced by the editor, follow the instructions in the counterfactual analysis notebooks 
+for (IMDB)[notebooks/counterfactual_analysis_imdb.ipynb] and (SNLI)[notebooks/counterfactual_analysis_snli.ipynb].
 The evaluation includes the following metrics:
 - _validity_ computed with off-the-shelf classifiers
 - _fluency_ computed with GPT-2 large
@@ -208,7 +209,12 @@ This phase uses the following hyperparameters:
  | expl_lbda                 | `0.001`               | Weight for the explainer loss                                                                              |
  | sparsemap_budget_strategy | `'adaptive_dynamic'`  | Strategy for setting the budget for the SparseMAP explainer: `'fixed'`, `'adaptive'`, `'adaptive_dynamic'` |
 
-You can check the running commands for all steps in the [run_steps.sh](run_steps.sh) script.
+
+### Evaluating Models
+
+Check the script [scripts/evaluate_model.py](scripts/evaluate_model.py) to evaluate the models on in-domain and out-of-domain data.
+
+The running commands for all steps can be found in the [run_steps.sh](run_steps.sh) script.
 
 ---
 
