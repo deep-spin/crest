@@ -1,6 +1,6 @@
 # CREST (Contrastive Edits with Sparse Rationalization)
 
-This repository contains the code for [CREST: A Joint Framework for Rationalization and Counterfactual Text Generation](https://arxiv.org/abs/), accepted at ACL 2023.
+This repository contains the code for [CREST: A Joint Framework for Rationalization and Counterfactual Text Generation](https://arxiv.org/abs/2305.17075), accepted at ACL 2023.
 
 CREST consists of two stages: Counterfactual Generation and Rationalization. 
 You can find the instructions for running each stage below.
@@ -86,27 +86,27 @@ This phase uses the following hyperparameters:
 
 | Hyperparam              | Default | Description                                                                                                          |
 |-------------------------|---------|----------------------------------------------------------------------------------------------------------------------|
-| tokenizer 					| `'t5-small'` | Pre-trained tokenizer from the Hugging Face hub. If None, a nltk's WordPunct tokenizer is used                       |
-| gen_arch 					| `'t5-small'` | Pre-trained LM from the Hugging Face hub used as the generator                                                       |
-| gen_emb_requires_grad 		| `False` | Determines if the generator's embedding layer is trainable (`True`) or frozen (`False`)                              |
-| gen_encoder_requires_grad 	| `False` | Determines if the generator's encoding layers are trainable (`True`) or frozen (`False`)                             |
-| gen_use_decoder 				| `False` | Specifies if the generator's decoder module (if applicable) is used                                                  |
-| pred_arch 					| `'t5-small'` | Pre-trained LM from the Hugging Face hub used as the predictor. Other options include `lstm` or `masked_average`.    |
-| pred_emb_requires_grad 		| `False` | Determines if the predictor's embedding layer is trainable (`True`) or frozen (`False`). (`False`)                   |
-| pred_encoder_requires_grad 	| `True` | Determines if the predictor's encoding layers are trainable (`True`) or frozen (`False`) (`False`)                   |
-| pred_output_requires_grad 	| `True` | Determines if the predictor's final output layers are trainable (`True`) or frozen (`False`). (`False`)              |
-| pred_bidirectional 			| `False` | Specifies if the predictor is bidirectional (for `lstm`)                                                             |
-| dropout 						| `0.1` | Dropout for the predictor's output layers                                                                            |
-| shared_gen_pred 				| `False` | Specifies if the weights of the generator and the predictor are shared                                               |
-| explainer 					| `'sparsemap'` | Explainer choice. See all options [here](rationalizers/explainers/__init__.py)                                       |
-| explainer_pre_mlp 			|  `True` | Specifies if a trainable MLP is included before the explainer                                                        |
-| explainer_requires_grad 		| `True` | Determines if the explainer is trainable or frozen, including the pre-MLP                                            |
-| sparsemap_budget 			| `30` | Sequence budget for the SparseMAP explainer                                                                          |
-| sparsemap_transition 		| `0.1` | Transition weight for the SparseMAP explainer                                                                        |
-| sparsemap_temperature 		| `0.01` | Temperature for training with SparseMAP explainer                                                                    |
-| selection_vector 			| `'zero'` | Which vector to use to represent differentiable masking: `mask` for [MASK], `pad` for [PAD], and `zero` for 0 vectors |
-| selection_faithfulness 		| `True` | Whether to perform masking on the original input x (`True`) or on the hidden states h (`False`)                      |
-| selection_mask 				| `False` | Whether to also mask elements during self-attention, rather than only masking input vectors                          |
+| tokenizer                | `'t5-small'` | Pre-trained tokenizer from the Hugging Face hub. If None, a nltk's WordPunct tokenizer is used                       |
+| gen_arch              | `'t5-small'` | Pre-trained LM from the Hugging Face hub used as the generator                                                       |
+| gen_emb_requires_grad       | `False` | Determines if the generator's embedding layer is trainable (`True`) or frozen (`False`)                              |
+| gen_encoder_requires_grad   | `False` | Determines if the generator's encoding layers are trainable (`True`) or frozen (`False`)                             |
+| gen_use_decoder             | `False` | Specifies if the generator's decoder module (if applicable) is used                                                  |
+| pred_arch                | `'t5-small'` | Pre-trained LM from the Hugging Face hub used as the predictor. Other options include `lstm` or `masked_average`.    |
+| pred_emb_requires_grad      | `False` | Determines if the predictor's embedding layer is trainable (`True`) or frozen (`False`). (`False`)                   |
+| pred_encoder_requires_grad  | `True` | Determines if the predictor's encoding layers are trainable (`True`) or frozen (`False`) (`False`)                   |
+| pred_output_requires_grad   | `True` | Determines if the predictor's final output layers are trainable (`True`) or frozen (`False`). (`False`)              |
+| pred_bidirectional          | `False` | Specifies if the predictor is bidirectional (for `lstm`)                                                             |
+| dropout                  | `0.1` | Dropout for the predictor's output layers                                                                            |
+| shared_gen_pred             | `False` | Specifies if the weights of the generator and the predictor are shared                                               |
+| explainer                | `'sparsemap'` | Explainer choice. See all options [here](rationalizers/explainers/__init__.py)                                       |
+| explainer_pre_mlp        |  `True` | Specifies if a trainable MLP is included before the explainer                                                        |
+| explainer_requires_grad     | `True` | Determines if the explainer is trainable or frozen, including the pre-MLP                                            |
+| sparsemap_budget         | `30` | Sequence budget for the SparseMAP explainer                                                                          |
+| sparsemap_transition     | `0.1` | Transition weight for the SparseMAP explainer                                                                        |
+| sparsemap_temperature       | `0.01` | Temperature for training with SparseMAP explainer                                                                    |
+| selection_vector         | `'zero'` | Which vector to use to represent differentiable masking: `mask` for [MASK], `pad` for [PAD], and `zero` for 0 vectors |
+| selection_faithfulness      | `True` | Whether to perform masking on the original input x (`True`) or on the hidden states h (`False`)                      |
+| selection_mask           | `False` | Whether to also mask elements during self-attention, rather than only masking input vectors                          |
 
 
 
@@ -128,15 +128,15 @@ After training, the editor will be saved to the path informed in the `default_ro
 
 This phase uses the following hyperparameters:
 
-| Hyperparam 				| Default                                                                                          | Description                                                                                                                                                                                           |
+| Hyperparam            | Default                                                                                          | Description                                                                                                                                                                                           |
 |-------------------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| factual_ckpt 			| `None` 	   				                                                                                  | Path to the pre-trained rationalizer checkpoint                                                                                                                                                       |
-| cf_gen_arch 				| `'t5-small'` 				                                                                                | The name of a pre-trained LM from the huggingface hub to use as the editor                                                                                                                            |
-| cf_prepend_label_type 	| `'gold'` 	   				                                                                                | Whether to prepend gold (`gold`) or predicted (`pred`) labels to the input of the editor                                                                                                              |
-| cf_z_type 		 		| `'pred'`                                                                                         | Whether to use the factual rationalizers' rationales (`pred`) or gold rationales, when available (`gold`)                                                                                             |
-| cf_task_name 		 	| `'binary_classification'`                                                                        | The name of the task at hand, used to create the name of prepend labels: `binary_classification`, `nli`, `nli_no_neutrals`                                                                            |
-| cf_classify_edits 	 	| `True` 					                                                                                     | Whether to classify the edits after generation                                                                                                                                                        |
-| cf_generate_kwargs 		| `do_sample: False, num_beams: 15, early_stopping: True, length_penalty: 1.0, no_repeat_ngram: 2` | Generation options passed to [huggingface's generate method](https://huggingface.co/docs/transformers/v4.23.1/en/main_classes/text_generation#transformers.generation_utils.GenerationMixin.generate) |
+| factual_ckpt          | `None`                                                                                                     | Path to the pre-trained rationalizer checkpoint                                                                                                                                                       |
+| cf_gen_arch           | `'t5-small'`                                                                                             | The name of a pre-trained LM from the huggingface hub to use as the editor                                                                                                                            |
+| cf_prepend_label_type    | `'gold'`                                                                                                 | Whether to prepend gold (`gold`) or predicted (`pred`) labels to the input of the editor                                                                                                              |
+| cf_z_type             | `'pred'`                                                                                         | Whether to use the factual rationalizers' rationales (`pred`) or gold rationales, when available (`gold`)                                                                                             |
+| cf_task_name          | `'binary_classification'`                                                                        | The name of the task at hand, used to create the name of prepend labels: `binary_classification`, `nli`, `nli_no_neutrals`                                                                            |
+| cf_classify_edits     | `True`                                                                                                     | Whether to classify the edits after generation                                                                                                                                                        |
+| cf_generate_kwargs       | `do_sample: False, num_beams: 15, early_stopping: True, length_penalty: 1.0, no_repeat_ngram: 2` | Generation options passed to [huggingface's generate method](https://huggingface.co/docs/transformers/v4.23.1/en/main_classes/text_generation#transformers.generation_utils.GenerationMixin.generate) |
 
 
 > **Note:** You can get better counterfactuals by using a larger language model as the editor, e.g., t5-base or t5-large. However, this will increase the training time.
@@ -280,11 +280,17 @@ Check also the [Online Demo](https://mtreviso.github.io/TextRankerJS/index_liker
 If you found our work/code useful, consider citing our paper:
 
 ```bibtex
-todo...
+@misc{treviso2023crest,
+      title={{CREST: A Joint Framework for Rationalization and Counterfactual Text Generation}}, 
+      author={Marcos Treviso and Alexis Ross and Nuno M. Guerreiro and André F. T. Martins},
+      year={2023},
+      eprint={2305.17075},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2305.17075}
+}
 ```
 
 ## Acknowledgments
 
 This code is largely based on the [SPECTRA](https://github.com/deep-spin/spectra-rationalization/) repo by Nuno Guerreiro.
-
-
